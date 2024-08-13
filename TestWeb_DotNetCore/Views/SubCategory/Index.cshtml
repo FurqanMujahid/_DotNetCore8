@@ -1,0 +1,78 @@
+﻿@model IEnumerable<SubCategory>
+@{
+    ViewData["Title"] = "Index";
+}
+<partial name="_Notification" />
+
+<div class="container p-3">
+    <div class="row p-4">
+        <div class="col-6">
+            <h2 class="text-primary">Sub Category List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="SubCategory" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> &nbsp; Create New SubCategory
+            </a>
+        </div>
+    </div>
+    <br /> <br />
+
+    <table class="table table-bordered table-striped" style="width : 100%">
+        <thead>
+
+            <tr>
+                <th>
+                    Sub Category ID
+                </th>
+                <th>
+                   Sub Category Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Date Time
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td width="5%">
+                        @obj.SubCategoryId
+                    </td>
+                    <td width="20%">
+                        @obj.SubCategoryName
+                    </td>
+                    <td width="40%">
+                        @obj.Description
+                    </td>
+                    <td width="30%">
+                        @obj.CreatedDateTime
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="SubCategory" asp-action="Edit" asp-route-id="@obj.SubCategoryId" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
+                            <a asp-controller="SubCategory" asp-action="Delete" asp-route-id="@obj.SubCategoryId" class="btn btn-danger mx-2"><i class="bi bi-trash"></i>Delete</a>
+                        </div>
+                    </td>
+
+
+                </tr>
+
+
+            }
+
+        </tbody>
+
+    </table>
+    </table>
+    <div>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-secondary" style="width:150px">
+            Back To List
+        </a>
+    </div>
+</div>

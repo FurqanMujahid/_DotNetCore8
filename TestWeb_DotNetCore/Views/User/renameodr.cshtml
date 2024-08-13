@@ -1,0 +1,82 @@
+﻿<!---
+@{
+    ViewData["Title"] = "Order Page";
+}
+
+<h2>Order Page</h2>
+
+<p>Selected SubCategory: @Model.SubCategoryName</p>
+<!-- form  -->
+@* @{
+    ViewData["Title"] = "Order Page";
+}
+
+<h2>Order Page</h2>
+
+<form id="orderForm">
+    <div class="form-group">
+        <label for="categoryDropdown">Category</label>
+        <select id="categoryDropdown" class="form-control">
+            <option value="">Select Category</option>
+            <!-- Categories will be dynamically loaded here -->
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="subCategoryDropdown">SubCategory</label>
+        <select id="subCategoryDropdown" class="form-control" disabled>
+            <option value="">Select SubCategory</option>
+            <!-- Subcategories will be dynamically loaded here -->
+        </select>
+    </div>
+
+    <!-- Additional form fields -->
+
+    <button type="submit" class="btn btn-primary">Submit Order</button>
+</form>
+
+@section Scripts {
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Load categories
+            $.ajax({
+                url: '@Url.Action("GetCategories", "Category")',
+                type: 'GET',
+                success: function (data) {
+                    var categoryDropdown = $('#categoryDropdown');
+                    categoryDropdown.empty();
+                    categoryDropdown.append('<option value="">Select Category</option>');
+                    $.each(data, function (i, category) {
+                        categoryDropdown.append('<option value="' + category.categoryId + '">' + category.name + '</option>');
+                    });
+                }
+            });
+
+            // On category change, load subcategories
+            $('#categoryDropdown').change(function () {
+                var categoryId = $(this).val();
+                var subCategoryDropdown = $('#subCategoryDropdown');
+
+                if (categoryId) {
+                    $.ajax({
+                        url: '@Url.Action("GetSubCategories", "SubCategory")',
+                        type: 'GET',
+                        data: { categoryId: categoryId },
+                        success: function (data) {
+                            subCategoryDropdown.empty();
+                            subCategoryDropdown.append('<option value="">Select SubCategory</option>');
+                            $.each(data, function (i, subCategory) {
+                                subCategoryDropdown.append('<option value="' + subCategory.subCategoryId + '">' + subCategory.subCategoryName + '</option>');
+                            });
+                            subCategoryDropdown.prop('disabled', false);
+                        }
+                    });
+                } else {
+                    subCategoryDropdown.empty().append('<option value="">Select SubCategory</option>').prop('disabled', true);
+                }
+            });
+        });
+    </script>
+}
+ *@

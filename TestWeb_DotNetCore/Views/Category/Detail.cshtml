@@ -1,0 +1,44 @@
+﻿ @model TestWeb_DotNetCore.Models.Category
+
+<div class="container p-3">
+    <div class="row p-4">
+        <div class="col-12">
+            <h2 class="text-primary">Category Name is : @Model.Name</h2> </<br />
+            <h2 class="text-primary">Category Id is : @Model.CategoryId</h2>
+        </div>
+    </div>
+    <div class="col-12 text-end">
+        <a asp-controller="SubCategory" asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> &nbsp; Create New SubCategory
+        </a>
+    </div>
+
+    <h3 class="mb-3">Sub Categories</h3>
+
+    <table class="table table-bordered table-striped" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Sub Category Name</th>
+                <th>Description</th>
+                <th>Created Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subCategory in Model.SubCategories)
+            {
+                <tr>
+                    <td>@subCategory.SubCategoryName</td>
+                    <td>@subCategory.Description</td>
+                    <td>@subCategory.CreatedDateTime.ToString("MM/dd/yyyy")</td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <div>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-secondary" style="width:150px">
+            Back To List
+        </a>
+    </div>
+</div>
+ 

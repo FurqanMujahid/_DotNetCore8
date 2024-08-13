@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TestWeb_DotNetCore.Models.Category>
+
+@{
+    ViewData["Title"] = "Select Category";
+}
+
+<h2>Select Category</h2>
+
+<form id="categoryForm" method="post" asp-controller="Order" asp-action="Order">
+    <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" name="category" class="form-control">
+            <option value="">Select a category</option>
+            @foreach (var category in Model)
+            {
+                <option value="@category.CategoryId">@category.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group" id="subCategoryContainer">
+        <!-- Subcategory dropdown will be populated here -->
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Proceed" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#category').change(function () {
+                var categoryId = $(this).val();
+                if (categoryId) {
+                    $.ajax({
+                        url: '@Url.Action("GetSubCategories", "Category")',
+                        type: 'GET',
+                        data: { id: categoryId },
+                        success: function (data) {
+                            var $subCategoryContainer = $('#subCategoryContainer');
+                            $subCategoryContainer.empty();
+                            if (data.length > 0) {
+                                var $select = $('<select id="subCategory" name="subCategory" class="form-control"><option value="">Select a subcategory</option></select>');
+                                $.each(data, function (i, item) {
+                                    $select.append('<option value="' + item.subCategoryId + '">' + item.subCategoryName + '</option>');
+                                });
+                                $subCategoryContainer.append($select);
+                            } else {
+                                $subCategoryContainer.append('<p>No subcategories available</p>');
+                            }
+                        }
+                    });
+                } else {
+                    $('#subCategoryContainer').empty();
+                }
+            });
+        });
+    </script>
+}
