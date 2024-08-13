@@ -25,7 +25,7 @@ namespace TestWeb_DotNetCore.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TestWeb_DotNetCore.Models.Category", b =>
+            modelBuilder.Entity("TestWeb_DotNetCore.Models.Category ", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
